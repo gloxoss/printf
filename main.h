@@ -2,43 +2,65 @@
 #define MAIN_H
 
 #include <stdarg.h>
-#include <stddef.h>
+#include <stdlib.h>
+#include <unistd.h>
+
 /**
- * struct func - struct
- * @fmt: convention code
- * @fo_fun: function pointer
+ * struct fmt - Struct for formatting data.
+ * @sym: *sym: Pointer to a character string.
+ * @fn: func pointer to a function that takes a va_list as an arg.
  */
-typedef struct func
+typedef struct fmt
 {
-	char *fmt;
-	int (*fo_fun)(va_list, int);
+	char *sym;
+	int (*fn)(va_list, int);
+} fmt_t;
 
-} fun;
+typedef struct flags
+{
+	int j;
+	int plus;
+	int space;
+	int hash;
+} flags_t;
 
-
-int _putchar(char c);
+/* main */
 int _printf(const char *format, ...);
-int helper_func(const char *format, va_list vl, fun *f_list);
 
-int op_char(va_list vl, int flag);
-int op_string(va_list vl, int flag);
-int op_percent(va_list vl, int flag);
+/* handlers */
+int (*get_print(const char *format))(va_list, int);
+void parse_flags(const char *format, flags_t *flags,
+				 int, int *, int *);
 
-int op_int(va_list vl, int flag);
-int op_uint(va_list vl, int flag);
+/* print_chars */
+int print_char(va_list list, int field_width);
+int print_str(va_list list, int field_width);
+int print_perc(va_list list, int field_width);
 
-int op_binary(va_list vl, int flag);
-int op_octal(va_list vl, int flag);
-int op_hex(va_list vl, int flag);
-int op_heX(va_list vl, int flag);
-int convert_base(unsigned long n, int base, char c);
+/* print_numbers */
+int print_int(va_list list, int field_width);
+int print_unsigned(va_list list, int field_width);
 
-int op_nptbl(va_list vl, int flag);
+/* print_bases */
+int print_binary(va_list list, int field_width);
+int print_octal(va_list list, int field_width);
+int print_hex(va_list list, int field_width);
+int print_HEX(va_list list, int field_width);
+int print_addrs(va_list list, int field_width);
 
-int op_add(va_list vl, int flag);
+/* print_customs */
+int print_STR(va_list list, int field_width);
+int print_rev(va_list list, int field_width);
 
-int flag_checker(char fmt);
+/* utilities */
+unsigned int _strlen(char *s);
+void reverse_str(char s[]);
+void _itoa(long n, char s[]);
+int to_base_n(unsigned long num, int base, char s[]);
+int _isdigit(int c);
 
+/* writes */
+int _putchar(char c);
+int _puts(char *str);
 
-
-#endif /* MAIN_H */
+#endif
