@@ -1,5 +1,7 @@
 #include <stdbool.h>
 #include <stdarg.h>
+#include "main.h"
+
 
 /**
  * get_precision - Parses the precision value from a format string.
