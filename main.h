@@ -28,4 +28,11 @@ int get_precision(const char *format, int *m, va_list list);
 int get_size(const char *format, int *m);
 int handle_print(const char *format, int *m, va_list list,char buffer[], int flags, int width, int precision,int size);
 
+
+typedef struct fmt
+{
+	char fmt;
+	int (*fn)(va_list, char*, int, int, int, int);
+} fmt_t;
+
 #endif /* MAIN_H */
