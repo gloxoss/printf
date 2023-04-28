@@ -1,24 +1,32 @@
 fndef MAIN_H
 #define MAIN_H
 
-#include <stdio.h>
 #include <stdarg.h>
 
-#define BUFFER_SIZE 1024
+/**
+ *  * struct print_format - struct for printing format
+ *   * @letter: character representing the format
+ *    * @func: function pointer to handle the format
+ *     */
+typedef struct print_format
+{
+	    char *letter;
+	        int (*func)(va_list);
+} print_format_t;
 
+/* _putchar - writes a character to stdout */
+int _putchar(char c);
+
+/* _printf - produces output according to a format */
 int _printf(const char *format, ...);
+
+/* print_char - prints a single character */
 int print_char(va_list args);
-int print_string(va_list args);
+
+/* print_str - prints a string */
+int print_str(va_list args);
+
+/* print_percent - prints a percent sign */
 int print_percent(va_list args);
-int print_int(va_list args);
-int print_unsigned(va_list args);
-int print_octal(va_list args);
-int print_hex(va_list args);
-int print_HEX(va_list args);
-int print_binary(va_list args);
-int print_pointer(va_list args);
-int print_rot13(va_list args);
-int print_rev(va_list args);
-int print_S(va_list args);
 
 #endif /* MAIN_H */
