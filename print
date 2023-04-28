@@ -1,0 +1,71 @@
+nclude <stdarg.h>
+#include <unistd.h>
+
+/**
+ * _putchar - writes a character to stdout
+ * @c: The character to print
+ *
+ * Return: On success 1.
+ * On error, -1 is returned.
+ */
+int _putchar(char c)
+{
+	return (write(STDOUT_FILENO, &c, 1));
+}
+
+/**
+ * _printf - produces output according to a format
+ * @format: A character string containing zero or more directives
+ *
+ * Return: The number of characters printed (excluding the null byte used to end output to strings)
+ */
+int _printf(const char *format, ...)
+{
+	va_list args;
+	int printed = 0;
+
+	va_start(args, format);
+
+	while (*format)
+	{
+		if (*format == '%')
+		{
+			format++; /* skip the % character */
+
+			switch (*format)
+			{
+				case 'c':
+					_putchar(va_arg(args, int));
+					printed++;
+					break;
+
+				case 's':
+					printed += write(STDOUT_FILENO, va_arg(args, char *), sizeof(char *));
+					break;
+
+				case '%':
+					_putchar('%');
+					printed++;
+					break;
+
+				default:
+					_putchar('%');
+					_putchar(*format);
+					printed += 2;
+					break;
+			}
+		}
+		else
+		{
+			_putchar(*format);
+			printed++;
+		}
+
+		format++;
+	}
+
+	va_end(args);
+
+	return (printed);
+}
+
